@@ -1,30 +1,27 @@
-package com.geekbrains.spring_data1.entites;
+package com.geekbrains.spring_data1.dto;
 
-import jdk.jfr.DataAmount;
+import com.geekbrains.spring_data1.entites.Product;
 
 import javax.persistence.*;
 
 
-@Entity
-@Table(name = "products")
 
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+
+public class ProductDto {
+
     public long id;
 
-    @Column(name = "name")
+
     public String name;
 
-    @Column(name = "cost")
+
     public Integer cost;
 
     public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -43,18 +40,18 @@ public class Product {
     public void setCost(Integer cost) {
         this.cost = cost;
     }
-
-    public Product(long i, String name,Integer a ){
-        this.id = i;
-        this.name = name;
-        this.cost = a;
+// из класса создаем dto
+    public ProductDto(Product product){
+        this.id = product.getId();
+        this.name = product.getName();
+        this.cost = product.getCost();
     }
-    public Product(){
+    public ProductDto(){
 
     }
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductDto{" +
                 "id='" + id + '\'' +
                 ", title='" + name + '\'' + ", cost = " + cost +
                 '}';
