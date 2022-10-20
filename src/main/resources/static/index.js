@@ -17,6 +17,7 @@ $scope.loadProducts = function (pageIndex = 1) {
         });
     };
 
+
     $scope.deleteProduct = function (productId) {
         $http.delete(contextPath + '/products/' + productId)
             .then(function (response) {

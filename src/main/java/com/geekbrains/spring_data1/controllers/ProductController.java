@@ -1,6 +1,5 @@
 package com.geekbrains.spring_data1.controllers;
 
-
 import com.geekbrains.spring_data1.dto.ProductDto;
 import com.geekbrains.spring_data1.entites.Product;
 import com.geekbrains.spring_data1.exceptions.ResourceNotFoundException;
@@ -72,7 +71,7 @@ public class ProductController {
         Product product = productService.findById(productDto.getId()).get();
         product.setName(productDto.getName());
         product.setCost(product.getCost());
-        // возвращаем 
+        // возвращаем
         return productDto;
     }
 

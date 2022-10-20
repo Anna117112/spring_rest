@@ -1,6 +1,5 @@
 create table if not exists products (id bigserial primary key, name varchar(255),cost int);
 
-
 insert into products (name, cost)
 values
 ('Product1', 100),

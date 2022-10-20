@@ -40,7 +40,6 @@ public class ProductService {
         // вывод с первой страницы, на страницы по 5 обектов PageRequest.of(page-1, 5) можно добавить sort
         return productRepository.findAll(spec, PageRequest.of(page-1, 5));
 
-
     }
 // получить всех студентов это метод findAll() взяли из наслодованного класса рекозитория JpaRepository
     public List<Product> findAll() {
