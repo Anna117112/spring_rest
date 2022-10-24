@@ -1,13 +1,21 @@
 package com.geekbrains.spring_data1.entites;
 
 import jdk.jfr.DataAmount;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "products")
-
+// подключили зависимость lombok  и можно убрать гетеры и сетеры поставив @Data и конструктор по
+// умолчанию пустой @NoArgsConstructor
+@Data
+@NoArgsConstructor
+// конструктор со всеми полями
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,43 +28,7 @@ public class Product {
     @Column(name = "cost")
     public Integer cost;
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getCost() {
-        return cost;
-    }
-
-    public void setCost(Integer cost) {
-        this.cost = cost;
-    }
-
-    public Product(long i, String name,Integer a ){
-        this.id = i;
-        this.name = name;
-        this.cost = a;
-    }
-    public Product(){
-
-    }
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                ", title='" + name + '\'' + ", cost = " + cost +
-                '}';
+    public void setId(Long aLong) {
     }
 }

@@ -38,38 +38,54 @@
         <p></p>
         <button class="btn btn-outline-warning btn-sm" style="width: 100%;" type="submit">Применить</button>
     </form>
-    <h3>Список продуктов</h3>
+    <h3>Каталог товаров</h3>
     <table class="table table-hover">
         <tr>
             <td>ID</td>
             <td>Наименование продукта</td>
             <td>Цена</td>
             <td>Действие</td>
+
         </tr>
         <tbody>
         <!-- выводим список через цикл html-->
         <tr ng-repeat="p in ProductsList">
             <td>{{p.id}}</td>
             <td>{{p.name}}</td>
-            <td>{{p.cost}}</td>
-
             <td>
-                <button class="btn btn-danger" ng-click="deleteProduct(p.id)">Исключить</button>
+                {{p.cost}}
             </td>
+
+        <td>
+        <button class="btn btn-danger" ng-click="addProduct(p.id)">Добавить в корзину</button>
+        </td>
         </tr>
         </tbody>
     </table>
 
-    <p></p>
-    <h3>Добавить продукт через JSON</h3>
-    <form novalidate ng-submit="createProductJson()">
-        <input class="form-control" type="text" placeholder="Имя" ng-model="newProductJson.name">
-        <p></p>
-        <input class="form-control" type="number" placeholder="Цена" ng-model="newProductJson.cost">
-        <p></p>
-        <button type="submit" class="btn btn-primary">Сохранить JSON продукт</button>
-    </form>
+    <h3>Коpзина</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>ID</td>
+            <td>Наименование продукта</td>
+            <td>Цена</td>
 
+
+        </tr>
+        <tbody>
+        <!-- выводим список через цикл html-->
+        <tr ng-repeat="p in ProductBasket">
+            <td>{{p.id}}</td>
+            <td>{{p.name}}</td>
+            <td>{{p.cost}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="deleteById(p.id)">Удалить</button>
+            </td>
+
+        </tr>
+
+        </tbody>
+    </table>
 
 </div>
 

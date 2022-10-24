@@ -6,12 +6,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 // спецификация критерий поиска
 public class ProductsSpecifications {
-    public static Specification<Product> scoreGreaterOrEqualsThan(Integer cost) {
+    public static Specification<Product> costGreaterOrEqualsThan(Integer cost) {
       //  цена больше либо равна чему то criteriaBuilder.greaterThanOrEqualTo это инфо из конря root.get("price") указывается в названии метода <Product>
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("cost"), cost);
     }
 
-    public static Specification<Product> scoreLessThanOrEqualsThan(Integer cost) {
+    public static Specification<Product> costLessThanOrEqualsThan(Integer cost) {
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("cost"), cost);
     }
 

@@ -13,25 +13,36 @@ $scope.loadProducts = function (pageIndex = 1) {
                 max_cost: $scope.filter ? $scope.filter.max_cost : null
             }
         }).then(function (response) {
+        // response.data - грузит всю страницу
             $scope.ProductsList = response.data.content;
         });
     };
 
+$scope.showBasket = function (pageIndex = 1) {
+        $http.get(contextPath + '/basket')
 
-    $scope.deleteProduct = function (productId) {
-        $http.delete(contextPath + '/products/' + productId)
-            .then(function (response) {
-                $scope.loadProducts();
-            });
-    }
+        .then(function (response) {
+        // response.data - грузит всю страницу
+            $scope.ProductBasket = response.data.content;
+        });
+    };
 
-     $scope.createProductJson = function () {
-            console.log($scope.newProductJson);
-            $http.post(contextPath + '/products', $scope.newProductJson)
+     $scope.addProduct = function (productId) {
+            $http.get(contextPath + 'basket/add/' + productId)
                 .then(function (response) {
-                    $scope.loadProducts();
+             $scope.ProductBasket = response.data.content;
+
                 });
         }
+            $scope.deleteById = function (productId) {
+                $http.get(contextPath + '/delete/' + productId)
+                    .then(function (response) {
+                        $scope.ProductBasket = response.data.content;
+                    });
+            }
+
+
+
           $scope.loadProducts();
         });
 

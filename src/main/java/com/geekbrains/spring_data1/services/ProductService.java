@@ -1,37 +1,44 @@
 package com.geekbrains.spring_data1.services;
 
 
+import com.geekbrains.spring_data1.dto.ProductDto;
 import com.geekbrains.spring_data1.entites.Product;
+import com.geekbrains.spring_data1.exceptions.ResourceNotFoundException;
 import com.geekbrains.spring_data1.repositories.ProductRepository;
 import com.geekbrains.spring_data1.services.specifications.ProductsSpecifications;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+// для полей final создает конструктор с этим набором полей -   public ProductService(ProductRepository productRepository) {
+//        this.productRepository = productRepository;
+//    }
+@RequiredArgsConstructor
 public class ProductService {
-    private ProductRepository productRepository;
+    // бин
+    private final ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+
 // Page список обектов с доп инфо - это продвинутый лист
-    public Page<Product> find (Integer minСost, Integer maxCost, String partName, Integer page){
+    public Page<Product> findAll(Integer minСost, Integer maxCost, String partName, Integer page){
         // хотим собрать спецификацию при null вытаскиваем всех
         Specification <Product> spec = Specification.where(null);
         // добавляем проверку для спецификации
         if (minСost!=null){
             // добавим к спецификации проверку
-            spec = spec.and(ProductsSpecifications.scoreGreaterOrEqualsThan(minСost));
+            spec = spec.and(ProductsSpecifications.costGreaterOrEqualsThan(minСost));
 
         }
         if (maxCost!=null) {
             // добавим к спецификации проверку
-            spec = spec.and(ProductsSpecifications.scoreLessThanOrEqualsThan(maxCost));
+            spec = spec.and(ProductsSpecifications.costLessThanOrEqualsThan(maxCost));
         }
         if (partName!=null) {
             // добавим к спецификации проверку
@@ -61,18 +68,25 @@ public class ProductService {
     public Product save(Product product) {
         return productRepository.save(product);
     }
-
-// списко между мин и макс ценой
-    public List<Product> findByCostBetween(Integer min, Integer max) {
-        return productRepository.findAllByCostBetween(min, max);
+@Transactional
+    public Product update(ProductDto productDto) {
+        Product product = productRepository.findById(productDto.getId()).orElseThrow(()->new ResourceNotFoundException("Невозможно обновить продукт не найден в базе id"));
+        product.setCost(productDto.getCost());
+        product.setName(productDto.getName());
+        return product;
     }
-// продукт с ценой больше мин
-    public List<Product> findByProductMoreMinCost() {
-        return productRepository.findAllProductMoreMinCost();
-    }
-    // продукт с ценой меньше макс
-    public List<Product> findByProductLessMaxCost() {
-        return productRepository.findAllProductLessMaxCost();
-    }
+//
+//// списко между мин и макс ценой
+//    public List<Product> findByCostBetween(Integer min, Integer max) {
+//        return productRepository.findAllByCostBetween(min, max);
+//    }
+//// продукт с ценой больше мин
+//    public List<Product> findByProductMoreMinCost() {
+//        return productRepository.findAllProductMoreMinCost();
+//    }
+//    // продукт с ценой меньше макс
+//    public List<Product> findByProductLessMaxCost() {
+//        return productRepository.findAllProductLessMaxCost();
+//    }
 
 }
