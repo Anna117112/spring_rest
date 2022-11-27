@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class ProductConverter {
     // преобразуем в продукт
     public Product dtoToEntity(ProductDto productDto){
-        return new Product(productDto.getId(), productDto.getName(), productDto.getCost());
+        return new Product(productDto.getId(), productDto.getTitle(), productDto.getPrice());
 
     }
     public ProductDto entityToDto(Product product){
-        return new ProductDto(product.getId(), product.getName(), product.getCost());
+        return new ProductDto(product.getId(), product.getTitle(), product.getPrice());
 
     }
 }
