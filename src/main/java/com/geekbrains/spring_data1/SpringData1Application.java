@@ -14,18 +14,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @SpringBootApplication
 @EnableAspectJAutoProxy
 public class SpringData1Application  {
-
 	public static void main(String[] args) {
-
-
 		SpringApplication.run(SpringData1Application.class, args);
-
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-
-
-
-
-		context.close();
 	}
-
 }
+
+

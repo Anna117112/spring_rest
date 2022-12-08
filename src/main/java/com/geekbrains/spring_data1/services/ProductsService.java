@@ -7,14 +7,19 @@ import com.geekbrains.spring_data1.exceptions.ResourceNotFoundException;
 import com.geekbrains.spring_data1.repositories.ProductsRepository;
 import com.geekbrains.spring_data1.repositories.specifications.ProductsSpecifications;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+@EnableAspectJAutoProxy
 @Service
 // для полей final создает конструктор с этим набором полей -   public ProductService(ProductRepository productRepository) {
 //        this.productRepository = productRepository;
@@ -23,6 +28,7 @@ import java.util.Optional;
 public class ProductsService {
     // Page список обектов с доп инфо - это продвинутый лист
     private final ProductsRepository productsRepository;
+
 
     public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, Integer page) {
         // хотим собрать спецификацию при null вытаскиваем всех
@@ -62,4 +68,21 @@ public class ProductsService {
         product.setTitle(productDto.getTitle());
         return product;
     }
+
+    public static final Function<Product, com.geekbrains.spring_data1.soap.Product> functionEntityToSoap = pe -> {
+        com.geekbrains.spring_data1.soap.Product p = new com.geekbrains.spring_data1.soap.Product();
+        p.setId(pe.getId());
+        p.setTitle(pe.getTitle());
+        p.setPrice(pe.getPrice());
+        return p;
+    };
+    public List<com.geekbrains.spring_data1.soap.Product> getAllProducts() {
+        return productsRepository.findAll().stream().map(functionEntityToSoap).collect(Collectors.toList());
+    }
+
+    public com.geekbrains.spring_data1.soap.Product getByName(String name) {
+        return productsRepository.findByName(name).map(functionEntityToSoap).get();
+    }
 }
+
+

@@ -22,6 +22,8 @@ public class ProductsController {
     private final ProductConverter productConverter;
     private final ProductValidator productValidator;
 
+
+
     @GetMapping
     public Page<ProductDto> getAllProducts(
             @RequestParam(name = "p", defaultValue = "1") Integer page,
@@ -64,4 +66,5 @@ public class ProductsController {
     public void deleteById(@PathVariable Long id) {
         productsService.deleteById(id);
     }
+
 }

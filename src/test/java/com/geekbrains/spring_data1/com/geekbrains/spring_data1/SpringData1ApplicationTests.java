@@ -1,6 +1,6 @@
-package com.geekbrains.spring_data1;
+package com.geekbrains.spring_data1.com.geekbrains.spring_data1;
 
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest

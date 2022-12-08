@@ -18,7 +18,7 @@ import java.util.List;
 public class AspectController {
 
     public final LogEsecutionTimeAspect logEsecutionTimeAspect;
-    
+
     @GetMapping()
     public List<InfoAspect> result(){
 
